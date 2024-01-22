@@ -1,14 +1,16 @@
 module.exports = {
   hooks: {
     readPackage(pkg, context) {
-      // I tried this, it doesnt work
-      // if (pkg.name === '@vitejs/plugin-vue2') {
-      //   pkg.peerDependencies = {
-      //     ...pkg.peerDependencies,
-      //     vue: '2.7.16'
-      //   }
-      //   context.log('vue@^3 => vue@2.7.16 in dependencies of @vitejs/plugin-vue2')
-      // }
+      if (pkg.name === "@vitejs/plugin-vue2") {
+        delete pkg.peerDependencies.vue;
+        pkg.peerDependencies = {
+          ...pkg.peerDependencies,
+          vue2: "npm:vue@2.7.16",
+        };
+        context.log(
+          "changing vue@^3 peer dependency of @vitejs/plugin-vue2 to vue@2.7.16"
+        );
+      }
 
       return pkg;
     },
